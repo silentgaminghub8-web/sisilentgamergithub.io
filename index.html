@@ -3,605 +3,801 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujjawal Malik (Raj)</title>
+    <meta name="theme-color" content="#ff6600">
+    <meta name="description" content="Silent Gamers - Premium gaming tournaments and services">
+    <title>SILENT GAMERS</title>
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to Home Screen icon for Chrome -->
+    <link rel="apple-touch-icon" href="https://ik.imagekit.io/silentgamers/Picsart_25-09-20_09-43-31-711.png?updatedAt=1758341648411">
     <style>
-        /* Base Styles & Variables */
+        /* Base styles and variables */
         :root {
-            --black: #000;
-            --white: #fff;
+            --primary: #ff6600;
+            --primary-dark: #e65c00;
+            --dark: #111;
+            --darker: #000;
+            --light: #f5f5f5;
+            --lighter: #fff;
             --grey: #888;
-            --darkgrey: #2a2a2a;
-            
-            --bg-color: var(--white);
-            --text-color: var(--black);
-            --header-bg: var(--white);
-            --divider-color: var(--darkgrey);
-            --image-border: rgba(0, 0, 0, 0.1);
-            --image-inner-glow: inset 0 0 8px rgba(0, 0, 0, 0.05);
-            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            
-            --font-family: 'Inter', 'Montserrat', system-ui, sans-serif;
-            --title-weight: 700;
-            --heading-weight: 600;
-            --body-weight: 400;
-            
-            --desktop: 1024px;
-            --tablet: 768px;
-            --mobile: 767px;
-        }
+            --darkgrey: #333;
+            --blue: #0066cc;
+            --pink: #ff3366;
+            --transition: all 0.3s ease;
+            --radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        } 
 
-        .dark-mode {
-            --bg-color: var(--black);
-            --text-color: var(--white);
-            --header-bg: var(--black);
-            --divider-color: #444;
-            --image-border: rgba(255, 255, 255, 0.1);
-            --image-inner-glow: inset 0 0 8px rgba(255, 255, 255, 0.05);
-            --shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
-        }
+        [data-theme="light"] {
+            --bg: var(--lighter);
+            --text: var(--darker);
+            --card-bg: var(--light);
+            --card-border: rgba(0, 0, 0, 0.1);
+        } 
+
+        [data-theme="dark"] {
+            --bg: var(--darker);
+            --text: var(--lighter);
+            --card-bg: var(--dark);
+            --card-border: rgba(255, 255, 255, 0.1);
+        } 
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        } 
 
         body {
-            font-family: var(--font-family);
-            font-weight: var(--body-weight);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            letter-spacing: 0.01em;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        } 
 
-        /* Header Styles */
-        header {
-            position: sticky;
-            top: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 24px;
-            background-color: var(--header-bg);
-            z-index: 100;
-            transition: background-color 0.26s ease-in-out, box-shadow 0.3s ease;
-            box-shadow: none;
-        }
-
-        header.scrolled {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .dark-mode header.scrolled {
-            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-frame {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            border: 1px solid var(--white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            transition: transform 0.18s ease;
-            will-change: transform;
-        }
-
-        .logo-frame:hover {
-            transform: scale(1.03);
-        }
-
-        .logo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-title {
-            font-weight: var(--title-weight);
-            text-transform: uppercase;
-            font-size: 16px;
-        }
-
-        /* Dark Mode Toggle */
-        .dark-mode-toggle {
-            position: relative;
-            width: 48px;
-            height: 24px;
-            border-radius: 12px;
-            background-color: var(--grey);
-            cursor: pointer;
-            transition: background-color 0.26s ease-in-out;
-        }
-
-        .toggle-handle {
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--white);
-            transition: transform 0.26s ease-in-out;
-            will-change: transform;
-        }
-
-        .dark-mode .dark-mode-toggle {
-            background-color: var(--darkgrey);
-        }
-
-        .dark-mode .toggle-handle {
-            transform: translateX(24px);
-        }
-
-        /* Main Content Styles */
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 32px 20px 80px;
-        }
-
-        .content-block {
-            margin-bottom: 40px;
-        }
-
-        /* Image Framing */
-        .framed-image {
-            width: 100%;
-            border-radius: 10px;
-            border: 2px solid var(--image-border);
-            box-shadow: var(--image-inner-glow), 0 4px 12px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.52s ease-out, transform 0.52s ease-out, box-shadow 0.18s ease;
-            will-change: transform, opacity;
-        }
-
-        .framed-image.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .framed-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-        }
-
-        @media (min-width: 768px) {
-            .framed-image:hover {
-                transform: translateY(-6px) scale(1.01);
-                box-shadow: var(--image-inner-glow), 0 12px 20px rgba(0, 0, 0, 0.15);
-            }
-        }
-
-        /* Text Styles */
-        .name {
-            font-weight: var(--title-weight);
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .sub-heading {
-            font-weight: var(--heading-weight);
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-
-        .body-text {
-            font-weight: var(--body-weight);
-            font-size: 16px;
-            margin-bottom: 16px;
-            white-space: pre-line;
-        }
-
-        /* Divider */
-        .divider {
-            height: 1px;
-            background-color: var(--divider-color);
-            margin: 18px 0;
-        }
-
-        /* Button Styles */
-        .button-container {
-            text-align: center;
-            margin: 32px 0;
-        }
-
-        .pill-button {
-            display: inline-block;
-            padding: 12px 28px;
-            background-color: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--text-color);
-            border-radius: 50px;
-            font-family: var(--font-family);
-            font-size: 16px;
-            font-weight: var(--body-weight);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .pill-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .dark-mode .pill-button:hover {
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Instagram Link */
-        .instagram-link {
-            display: inline-block;
-            margin-top: 16px;
-        }
-
-        .instagram-icon {
-            width: 32px;
-            height: 32px;
-            filter: invert(0);
-            transition: filter 0.3s ease;
-        }
-
-        .dark-mode .instagram-icon {
-            filter: invert(1);
-        }
-
-        /* Floating PNG */
-        .floating-png {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 72px;
-            height: 72px;
-            pointer-events: none;
-            z-index: 90;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-6px) rotate(3deg);
-            }
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-        }
-
-        /* Modal Styles */
-        .modal {
+        /* Particle background */
+        #particle-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+            pointer-events: none;
+        } 
+
+        /* Header styles */
+        header {
+            position: sticky;
+            top: 0;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.26s ease;
-        }
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        } 
 
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        } 
 
-        .modal-content {
-            background-color: var(--bg-color);
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            transform: scale(0.97);
-            transition: transform 0.26s ease;
+        .logo img {
+            height: 100%;
+        } 
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
             position: relative;
-        }
+        } 
 
-        .modal.active .modal-content {
-            transform: scale(1);
-        }
+        .site-title span {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: titleAnimation 0.5s forwards;
+        } 
 
-        .modal h2 {
-            font-weight: var(--heading-weight);
-            margin-bottom: 16px;
-            font-size: 20px;
-        }
+        @keyframes titleAnimation {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        } 
 
-        .modal p {
-            margin-bottom: 24px;
-            white-space: pre-line;
-        }
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        } 
 
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+        /* Dark mode toggle */
+        .theme-toggle {
             background: none;
             border: none;
-            font-size: 20px;
             cursor: pointer;
-            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--darkgrey);
+            transition: var(--transition);
+        } 
+
+        .theme-toggle:hover {
+            background-color: var(--primary);
+        } 
+
+        .theme-icon {
+            font-size: 1.2rem;
+            color: var(--light);
+            transition: var(--transition);
+        } 
+
+        /* Button styles */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        } 
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        } 
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        } 
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        } 
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        } 
+
+        /* Hero section */
+        .hero {
+            width: 100%;
+            overflow: hidden;
+            max-height: 40vh;
+        } 
+
+        .hero-gif {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        } 
+
+        /* Sections */
+        section {
+            padding: 3rem 1rem;
+        } 
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            letter-spacing: 3px;
+            position: relative;
+        } 
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        } 
+
+        /* Services grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        } 
+
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            border: 1px solid var(--card-border);
+        } 
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        } 
+
+        .service-img-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 1rem;
+            border: 3px solid var(--primary);
+            animation: pulse 2s infinite;
+        } 
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(255, 102, 0, 0.4); }
+            100% { box-shadow: 0 0 0 10px rgba(255, 102, 0, 0); }
+        } 
+
+        .service-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        } 
+
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text);
+        } 
+
+        .service-card.solo {
+            grid-column: 1 / -1;
+        } 
+
+        /* Big photo section */
+        .big-photo {
+            width: 100%;
+            margin: 2rem 0;
+        } 
+
+        .big-photo img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        } 
+
+        /* Special note */
+        .special-note {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            color: white;
+            border-radius: var(--radius);
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        } 
+
+        .special-note::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,102,0,0.2) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        } 
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        } 
+
+        .special-note h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 1;
+        } 
+
+        .special-note-text {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(to right, var(--primary), var(--pink), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        } 
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(255, 102, 0, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 102, 0, 0.8), 0 0 30px rgba(255, 102, 0, 0.6); }
+        } 
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        } 
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        } 
+
+        /* PWA install prompt */
+        .pwa-prompt {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 1000;
+            max-width: 300px;
+            animation: slideIn 0.5s ease-out;
+        } 
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        } 
+
+        .pwa-prompt button {
+            background: white;
+            color: var(--primary);
+            border: nothing;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            margin-top: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        } 
+
+        .pwa-prompt button:hover {
+            background: #f0f0f0;
+        } 
+
+        /* Install button in header */
+        .install-btn {
+            display: none;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 1rem;
+        } 
+
+        /* Tournament button container */
+        .tournament-btn-container {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 1023px) and (min-width: 768px) {
-            main {
-                padding: 28px 20px 70px;
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .divider {
-                margin: 16px 0;
+            .service-card.solo {
+                grid-column: span 2;
             }
-        }
+            
+            .special-note h2 {
+                font-size: 3.5rem;
+            }
+        } 
 
-        @media (max-width: 767px) {
-            header {
-                padding: 10px 16px;
+        @media (max-width: 480px) {
+            .site-title {
+                font-size: 1.2rem;
             }
             
-            .logo-frame {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .header-title {
-                font-size: 14px;
-            }
-            
-            main {
-                padding: 24px 16px 60px;
-            }
-            
-            .name {
-                font-size: 20px;
-            }
-            
-            .sub-heading {
-                font-size: 18px;
-            }
-            
-            .body-text {
-                font-size: 14px;
-            }
-            
-            .divider {
-                margin: 12px 0;
-            }
-            
-            .floating-png {
-                width: 56px;
-                height: 56px;
-            }
-            
-            .modal-content {
-                padding: 24px 20px;
+            .pwa-prompt {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Sticky Header -->
-    <header id="main-header">
-        <div class="logo-container">
-            <div class="logo-frame">
-                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-16_07-10-33-449.png?updatedAt=1758209952116" alt="Logo">
-            </div>
+<body data-theme="dark">
+    <!-- Particle background canvas -->
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- Sticky header -->
+    <header>
+        <div class="logo">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-16_07-10-33-449.png?updatedAt=1758209952116" alt="Silent Gamers Logo">
         </div>
-        <div class="header-title">CEO</div>
-        <div class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
-            <div class="toggle-handle"></div>
+        
+        <h1 class="site-title">
+            <span>S</span><span>I</span><span>L</span><span>E</span><span>N</span><span>T</span> 
+            <span>G</span><span>A</span><span>M</span><span>E</span><span>R</span><span>S</span>
+        </h1>
+        
+        <div class="header-controls">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button class="install-btn" id="header-install-btn">Install App</button>
+            <button class="btn btn-primary" id="login-btn" onclick="window.location.href='https://script.google.com/macros/s/AKfycbxzZzvxtsj7zqBkrk8n-dMcph3qDwNumChhNLNRisQJi6M4nqyaztUskyQGv1tdDYNo/exec'">LOG IN</button>
         </div>
     </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Block -->
-        <section class="content-block">
-            <div class="framed-image" id="hero-image">
-                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-29-48-120.jpg?updatedAt=1758219956149" alt="Ujjawal Malik photo" loading="lazy">
-            </div>
-            <div class="name">Name: Ujjawal Malik</div>
-            <div class="body-text">Nickname: Raj</div>
-            <div class="body-text">Qualification: 12th Pass</div>
-            <div class="body-text">मैं एक simple इंसान हूँ जिसने अपने सपनों को हकीकत बनाने के लिए मेहनत शुरू की। पढ़ाई के साथ-साथ मैंने technology और gaming में अपना interest बनाया और धीरे-धीरे उसे अपनी life का हिस्सा बना लिया।</div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Passion & Purpose Block -->
-        <section class="content-block">
-            <div class="framed-image">
-                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-41-39-582.jpg?updatedAt=1758219956081" alt="Passion & Purpose image" loading="lazy">
-            </div>
-            <div class="sub-heading">My Passion & Purpose</div>
-            <div class="body-text">2019 में मैं एक e-sport player था, gaming ही मेरी ज़िंदगी थी। लेकिन एक accident ने मेरी life बदल दी और मेरी player journey वहीं खत्म हो गई। तभी से मैंने तय किया कि अगर मैं खुद नहीं खेल सकता, तो दूसरों को मौका दूँगा। इसलिए मैंने tournament hosting शुरू की – ताकि जिन खिलाड़ियों के पास पैसे नहीं हैं वो भी perform कर सकें और earn कर सकें। 👉 और इसमें हमारा कोई personal profit नहीं है, ये सिर्फ players के लिए है।</div>
-            <div class="body-text">My Vision: मेरा vision है कि मैं India का सबसे अच्छा tournament hoster बनूँ और हर खिलाड़ी को बराबर का मौका दे सकूँ।</div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Journey Block -->
-        <section class="content-block">
-            <div class="framed-image">
-                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-46-43-142.jpg?updatedAt=1758219955824" alt="Journey image" loading="lazy">
-            </div>
-            <div class="sub-heading">My Journey</div>
-            <div class="body-text">मेरी journey 2020 से शुरू हुई, जब मैंने अपना पहला project बनाने का सोचा। उसके लिए मुझे web coding सीखनी पड़ी, जिसकी वजह से काफी समय लग गया। इस दौरान मेरी सबसे बड़ी struggle रही – lack of time और lack of support। लेकिन मैंने कभी हार नहीं मानी। मेरी पहली achievement थी जब मेरे परिवार ने मुझ पर भरोसा किया और मुझे पैसा व समय दिया ताकि मैं अपने passion पर काम कर सकूँ – tournament hosting।</div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Side Income Button -->
-        <section class="button-container">
-            <button class="pill-button" id="side-income-btn">side income ?</button>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Closing Note Block -->
-        <section class="content-block">
-            <div class="framed-image">
-                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-54-31-904.jpg?updatedAt=1758219956099" alt="Closing note image" loading="lazy">
-            </div>
-            <div class="body-text">मैं मानता हूँ कि ज़िंदगी में आगे बढ़ने के लिए सिर्फ सपने देखना काफी नहीं, बल्कि मेहनत करना और दूसरों के लिए कुछ करना भी ज़रूरी है। मेरे लिए tournament सिर्फ game नहीं है – ये players के लिए एक नया मौका और एक नई उम्मीद है</div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Instagram Block -->
-        <section class="content-block">
-            <div class="framed-image">
-                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_22-50-11-848.jpg?updatedAt=1758219981179" alt="Instagram image" loading="lazy">
-            </div>
-            <a href="https://www.instagram.com/rajmalik_99?igsh=NHhxbXk5bWxudTlw" target="_blank" rel="noopener" class="instagram-link">
-                <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-            </a>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- Investors Block -->
-        <section class="content-block">
-            <div class="framed-image">
-                <img src="https://ik.imagekit.io/silentgamers/Our%20iinvester's_20250918_131352_0006.png?updatedAt=1758210644947" alt="Investors image" loading="lazy">
-            </div>
-        </section>
-    </main>
-
-    <!-- Floating PNG -->
-    <img class="floating-png" src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_01-34-16-235.png?updatedAt=1758210515029" alt="" aria-hidden="true">
-
-    <!-- Modal -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close" aria-label="Close modal">×</button>
-            <h2>Professional Side</h2>
-            <p>Gaming और tournament hosting के साथ-साथ मैं trading भी करता हूँ। लेकिन मैं उस तरह का trader नहीं हूँ जो courses बेचता है या Instagram पर show-off करता है। ये मेरे लिए सिर्फ एक side income source है, main focus हमेशा gaming और tournaments पर ही रहेगा।</p>
-            <button class="pill-button" id="modal-close-btn">Close</button>
+    
+    <!-- Hero section with GIF -->
+    <section class="hero">
+        <img src="https://ik.imagekit.io/silentgamers/Copy%20of%20silent_20250919_184429_0002.gif?updatedAt=1758287748025" alt="Silent Gamers Hero" class="hero-gif">
+    </section>
+    
+    <!-- Services section -->
+    <section class="services">
+        <!-- Play Tournament Button -->
+        <div class="tournament-btn-container">
+            <button class="btn btn-primary" onclick="location.href='login.html'">Play Tournament</button>
         </div>
-    </div>
-
-    <script>
-        // DOM Elements
-        const body = document.body;
-        const header = document.getElementById('main-header');
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const sideIncomeBtn = document.getElementById('side-income-btn');
-        const modal = document.getElementById('modal');
-        const modalClose = document.getElementById('modal-close');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const framedImages = document.querySelectorAll('.framed-image');
         
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            body.classList.add('dark-mode');
-        }
+        <h2 class="section-title">services</h2>
         
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 10) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-        
-        // Dark mode toggle
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
+        <div class="services-grid">
+            <!-- CEO Card -->
+            <div class="service-card">
+                <div class="service-img-container">
+                    <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-35-12-168.png?updatedAt=1758287986286" alt="CEO" class="service-img">
+                </div>
+                <h3 class="service-title">CEO</h3>
+                <button class="btn btn-outline" onclick="location.href='ceo.html'">check out</button>
+            </div>
             
-            // Save preference
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        });
+            <!-- COO Card -->
+            <div class="service-card">
+                <div class="service-img-container">
+                    <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-37-07-261.png?updatedAt=1758287984360" alt="COO" class="service-img">
+                </div>
+                <h3 class="service-title">COO</h3>
+                <button class="btn btn-outline" onclick="location.href='coo.html'">check out</button>
+            </div>
+            
+            <!-- Anti-hacker Card -->
+            <div class="service-card">
+                <div class="service-img-container">
+                    <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-29-08-757.png?updatedAt=1758287986342" alt="Anti-hacker" class="service-img">
+                </div>
+                <h3 class="service-title">Anti-hacker</h3>
+                <button class="btn btn-outline" onclick="location.href='anti.html'">check out</button>
+            </div>
+            
+            <!-- Tournament management Card -->
+            <div class="service-card">
+                <div class="service-img-container">
+                    <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-31-17-146.png?updatedAt=1758287986435" alt="Tournament management" class="service-img">
+                </div>
+                <h3 class="service-title">Tournament management</h3>
+                <button class="btn btn-outline" onclick="location.href='manage.html'">check out</button>
+            </div>
+            
+            <!-- Investors Card (solo) -->
+            <div class="service-card solo">
+                <div class="service-img-container">
+                    <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590" alt="Investors" class="service-img">
+                </div>
+                <h3 class="service-title">Investors</h3>
+                <button class="btn btn-outline" onclick="location.href='invester.html'">check out</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Big photo section -->
+    <section class="big-photo">
+        <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_02-49-16-996.jpg?updatedAt=1758210646096" alt="Silent Gamers Community">
+    </section>
+    
+    <!-- Special note section -->
+    <section class="special-note">
+        <h2>Premium Access</h2>
+        <p class="special-note-text">log in and get your special group</p>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <button class="btn btn-primary" id="footer-login-btn" onclick="window.location.href='https://script.google.com/macros/s/AKfycbxzZzvxtsj7zqBkrk8n-dMcph3qDwNumChhNLNRisQJi6M4nqyaztUskyQGv1tdDYNo/exec'">LOG IN</button>
+        </div>
+    </footer>
+    
+    <!-- PWA Install Prompt -->
+    <div class="pwa-prompt" id="pwa-prompt">
+        <p>Install Silent Gamers for a better experience</p>
+        <button id="pwa-install-btn">Install</button>
+        <button id="pwa-dismiss-btn">Dismiss</button>
+    </div>
+    
+    <script>
+        // DOM elements
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        const pwaPrompt = document.getElementById('pwa-prompt');
+        const pwaInstallBtn = document.getElementById('pwa-install-btn');
+        const pwaDismissBtn = document.getElementById('pwa-dismiss-btn');
+        const headerInstallBtn = document.getElementById('header-install-btn');
         
-        // Modal functionality
-        function openModal() {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            // Set focus to close button for accessibility
-            modalClose.focus();
+        // Current theme state
+        let isDarkMode = true;
+        let deferredPrompt; 
+
+        // Initialize the page
+        function init() {
+            // Initialize particle background
+            initParticles();
+            
+            // Set up theme toggle
+            setupThemeToggle();
+            
+            // Set up PWA install prompt
+            setupPWAInstall();
+            
+            // Register service worker
+            registerServiceWorker();
         }
         
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            // Return focus to the button that opened the modal
-            sideIncomeBtn.focus();
+        // Register service worker for GitHub Pages
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                // Use relative path for GitHub Pages
+                navigator.serviceWorker.register('sw.js', { scope: './' })
+                    .then((registration) => {
+                        console.log('SW registered successfully with scope: ', registration.scope);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            }
         }
         
-        sideIncomeBtn.addEventListener('click', openModal);
-        modalClose.addEventListener('click', closeModal);
-        modalCloseBtn.addEventListener('click', closeModal);
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
+        // Initialize particle background
+        function initParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            
+            // Set canvas size
+            function setCanvasSize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
-        });
-        
-        // Image reveal on scroll
-        function checkImageVisibility() {
-            framedImages.forEach(image => {
-                const rect = image.getBoundingClientRect();
-                const isVisible = (rect.top <= window.innerHeight - 100 && rect.bottom >= 0);
+            
+            setCanvasSize();
+            window.addEventListener('resize', setCanvasSize);
+            
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 1 - 0.5;
+                    this.speedY = Math.random() * 1 - 0.5;
+                    this.color = isDarkMode ? 'rgba(255, 102, 0, 0.5)' : 'rgba(0, 0, 0, 0.2)';
+                }
                 
-                if (isVisible) {
-                    image.classList.add('visible');
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x > canvas.width || this.x < 0) {
+                        this.speedX = -this.speedX;
+                    }
+                    if (this.y > canvas.height || this.y < 0) {
+                        this.speedY = -this.speedY;
+                    }
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            // Create particles
+            function createParticles() {
+                particlesArray = [];
+                const numberOfParticles = (canvas.width * canvas.height) / 9000;
+                
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+            
+            // Connect particles with lines
+            function connectParticles() {
+                const maxDistance = 100;
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a; b < particlesArray.length; b++) {
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < maxDistance) {
+                            const opacity = 1 - distance / maxDistance;
+                            ctx.strokeStyle = isDarkMode ? 
+                                `rgba(255, 102, 0, ${opacity * 0.2})` : 
+                                `rgba(0, 0, 0, ${opacity * 0.1})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+            
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                
+                connectParticles();
+                requestAnimationFrame(animate);
+            }
+            
+            createParticles();
+            animate();
+            
+            // Update particle colors when theme changes
+            window.updateParticleColors = function() {
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].color = isDarkMode ? 
+                        'rgba(255, 102, 0, 0.5)' : 
+                        'rgba(0, 0, 0, 0.2)';
+                }
+            };
+        }
+        
+        // Set up theme toggle functionality
+        function setupThemeToggle() {
+            themeToggle.addEventListener('click', () => {
+                isDarkMode = !isDarkMode;
+                document.body.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+                themeIcon.textContent = isDarkMode ? '🌙' : '☀️';
+                
+                // Update particle colors
+                if (typeof updateParticleColors === 'function') {
+                    updateParticleColors();
                 }
             });
         }
         
-        // Initial check and then on scroll
-        checkImageVisibility();
-        window.addEventListener('scroll', checkImageVisibility);
-        
-        // Focus trap for modal
-        modal.addEventListener('keydown', (e) => {
-            if (e.key !== 'Tab') return;
+        // Set up PWA install functionality
+        function setupPWAInstall() {
+            // Listen for beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent the mini-infobar from appearing on mobile
+                e.preventDefault();
+                // Stash the event so it can be triggered later
+                deferredPrompt = e;
+                // Show the install button in header
+                headerInstallBtn.style.display = 'block';
+                // Show the install prompt after a delay
+                setTimeout(() => {
+                    pwaPrompt.style.display = 'block';
+                }, 3000);
+            });
             
-            const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
+            // Handle install button click
+            pwaInstallBtn.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                
+                // Hide the install prompt
+                pwaPrompt.style.display = 'none';
+                // Clear the saved prompt since it can't be used again
+                deferredPrompt = null;
+            });
             
-            if (e.shiftKey) {
-                if (document.activeElement === firstElement) {
-                    lastElement.focus();
-                    e.preventDefault();
+            // Handle header install button click
+            headerInstallBtn.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    headerInstallBtn.style.display = 'none';
                 }
-            } else {
-                if (document.activeElement === lastElement) {
-                    firstElement.focus();
-                    e.preventDefault();
-                }
+                
+                // Clear the saved prompt since it can't be used again
+                deferredPrompt = null;
+            });
+            
+            // Handle dismiss button click
+            pwaDismissBtn.addEventListener('click', () => {
+                pwaPrompt.style.display = 'none';
+            });
+            
+            // Listen for app installed event
+            window.addEventListener('appinstalled', () => {
+                // Hide the install prompt and button
+                pwaPrompt.style.display = 'none';
+                headerInstallBtn.style.display = 'none';
+                // Clear the saved prompt
+                deferredPrompt = null;
+            });
+            
+            // Check if the app is already installed
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                headerInstallBtn.style.display = 'none';
             }
-        });
+        }
+        
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
