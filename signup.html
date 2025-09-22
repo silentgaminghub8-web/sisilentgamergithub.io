@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Gamers - Premium Tournament Registration</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background: #0a0a0a;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .headline {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #ff7700;
+            text-shadow: 0 0 15px rgba(255, 119, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .logo {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            border: 3px solid #ff7700;
+            box-shadow: 0 0 20px rgba(255, 119, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .note {
+            background: rgba(255, 119, 0, 0.1);
+            border-left: 4px solid #ff7700;
+            padding: 12px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .form-container {
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 119, 0, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ff7700;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ff7700;
+            font-size: 0.9rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #ff7700;
+            box-shadow: 0 0 0 2px rgba(255, 119, 0, 0.2);
+        }
+        
+        input::placeholder {
+            color: #888;
+        }
+        
+        .field-note {
+            font-size: 0.75rem;
+            color: #ff7700;
+            margin-top: 5px;
+            display: block;
+            font-style: italic;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff7700 0%, #ff5500 100%);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #ff8800 0%, #ff6600 100%);
+            box-shadow: 0 0 15px rgba(255, 119, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .alert-success {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+        
+        .alert-error {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 119, 0, 0.3);
+            border-top: 3px solid #ff7700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-note {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="headline">SILENT GAMERS</div>
+            <div class="logo">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-35-12-168.png?updatedAt=1758287986286" alt="Silent Gamers Logo">
+            </div>
+            <div class="note">
+                All these changes will be Permanent. If you want to edit in future you need to pay $1 (if you enter right, lifetime free).
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <h1>Tournament Registration</h1>
+            
+            <div id="alertBox" class="alert"></div>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="username">Username *</label>
+                    <input type="text" id="username" name="Username" required placeholder="Enter your gaming username">
+                    <span class="field-note">This will be your Permanent name (unchangeable)</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile">Mobile Number *</label>
+                    <input type="number" id="mobile" name="Mobile Number" required placeholder="Your WhatsApp number">
+                    <span class="field-note">We will contact you on WhatsApp for announcements</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="Email" required placeholder="Your active email address">
+                    <span class="field-note">All of your winning history will be provided here</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gameuid">Game UID *</label>
+                    <input type="text" id="gameuid" name="Game UID" required placeholder="Your unique game ID">
+                    <span class="field-note">If you enter wrong, you will never enter in tournaments because we check UIDs in rooms</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="instagram">Instagram (Optional)</label>
+                    <input type="text" id="instagram" name="Instagram" placeholder="Your Instagram username">
+                    <span class="field-note">We provide hacker-free and commission-free services. Before giving rewards, we always verify that you follow us. Don't try to follow just to get rewards - you will not get the prize pool if you follow after match announcement.</span>
+                </div>
+                
+                <button type="submit" id="submitBtn">
+                    <span id="btnText">Register Now</span>
+                    <span id="btnLoading" class="loading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div id="successNote" class="success-note">
+                You will get your ID and password soon on WhatsApp.
+            </div>
+        </div>
+    </div>
+
+    <!-- Particles.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Replace this with your actual Google Apps Script Web App URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUy27ykgGSkAH0F4_f-af8fPxX5R0lhCMhMYt5a-IejjW6kM0sfcAil1W6Mis_wkOo/exec';
+        
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ff7700" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#ff7700",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 3,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+        });
+        
+        const form = document.getElementById('signupForm');
+        const alertBox = document.getElementById('alertBox');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+        const submitBtn = document.getElementById('submitBtn');
+        const successNote = document.getElementById('successNote');
+        
+        function showAlert(message, type) {
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            alertBox.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+        
+        function setLoading(loading) {
+            if (loading) {
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline-block';
+                submitBtn.disabled = true;
+            } else {
+                btnText.style.display = 'inline-block';
+                btnLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Validate form
+            if (!data.Username || !data['Mobile Number'] || !data.Email || !data['Game UID']) {
+                showAlert('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            setLoading(true);
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert(result.message, 'success');
+                    successNote.style.display = 'block';
+                    form.reset();
+                    
+                    // Hide success note after 8 seconds
+                    setTimeout(() => {
+                        successNote.style.display = 'none';
+                    }, 8000);
+                } else {
+                    showAlert(result.message, 'error');
+                    successNote.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Network error. Please try again.', 'error');
+                successNote.style.display = 'none';
+            } finally {
+                setLoading(false);
+            }
+        });
+        
+        // Input validation
+        const inputs = form.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#dc3545';
+                } else {
+                    input.style.borderColor = '#333';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
